@@ -1,125 +1,217 @@
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans, system-ui, sans-serif); }
-  :root {
-    --red: #E24B4A; --red-dark: #A32D2D; --red-light: #FCEBEB; --red-mid: #F7C1C1;
-    --white: #fff; --gray-light: #f8f8f8; --gray-text: #555; --gray-dark: #222;
-  }
-  body { background: transparent; }
+*{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-sans,system-ui,sans-serif)}
+:root{
+  --r:#E24B4A;--rd:#A32D2D;--rl:#FCEBEB;--rm:#F7C1C1;--r4:#F09595;
+  --wh:#fff;--gl:#f9f9f9;--gt:#555;--gd:#1a1a1a;--gb:#eee;
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
-  /* NAV */
-  .nav { background: var(--red); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .nav-logo { color: #fff; font-size: 22px; font-weight: 500; letter-spacing: 1px; }
-  .nav-logo span { font-size: 12px; font-weight: 400; opacity: 0.85; margin-left: 6px; }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-links button { background: transparent; border: none; color: rgba(255,255,255,0.85); font-size: 13px; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
-  .nav-links button:hover, .nav-links button.active { background: rgba(255,255,255,0.18); color: #fff; }
+/* NAV */
+.nav{background:var(--r);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:100}
+.nav-logo{color:#fff;font-size:20px;font-weight:500;letter-spacing:1.5px;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;background:#fff;border-radius:50%;opacity:.7}
+.nav-links{display:flex;gap:2px}
+.nb{background:transparent;border:none;color:rgba(255,255,255,.8);font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.nb:hover,.nb.active{background:rgba(255,255,255,.2);color:#fff}
 
-  /* PAGES */
-  .page { display: none; padding: 2rem 1.5rem; max-width: 860px; margin: 0 auto; }
-  .page.active { display: block; }
+/* PAGES */
+.page{display:none;padding:1.5rem;max-width:900px;margin:0 auto}
+.page.active{display:block}
 
-  /* HERO */
-  .hero { background: var(--red); border-radius: 16px; padding: 2.5rem 2rem; margin-bottom: 2rem; text-align: center; }
-  .hero h1 { color: #fff; font-size: 28px; font-weight: 500; margin-bottom: 8px; }
-  .hero p { color: rgba(255,255,255,0.88); font-size: 15px; line-height: 1.6; max-width: 540px; margin: 0 auto 1.5rem; }
-  .hero-btn { background: #fff; color: var(--red-dark); border: none; padding: 10px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
-  .hero-btn:hover { opacity: 0.9; }
+/* HERO */
+.hero{background:var(--r);border-radius:16px;padding:2.5rem 2rem;margin-bottom:1.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.07);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;background:rgba(255,255,255,.06);border-radius:50%}
+.hero h1{color:#fff;font-size:26px;font-weight:500;margin-bottom:8px}
+.hero p{color:rgba(255,255,255,.88);font-size:14px;line-height:1.65;max-width:520px;margin:0 auto 1.5rem}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hbtn{border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.hbtn-w{background:#fff;color:var(--rd)}
+.hbtn-o{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.hbtn:hover{opacity:.88}
 
-  /* CARDS GRID */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 2rem; }
-  .card { background: var(--white); border: 0.5px solid #eee; border-radius: 12px; padding: 1.25rem; }
-  .card-icon { font-size: 24px; margin-bottom: 10px; }
-  .card h3 { font-size: 14px; font-weight: 500; color: var(--gray-dark); margin-bottom: 6px; }
-  .card p { font-size: 13px; color: var(--gray-text); line-height: 1.6; }
-  .card-accent { border-top: 3px solid var(--red); }
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--wh);border:0.5px solid var(--gb);border-radius:10px;padding:14px;text-align:center;border-top:3px solid var(--r)}
+.stat-num{font-size:24px;font-weight:500;color:var(--r)}
+.stat-lbl{font-size:11px;color:var(--gt);margin-top:3px}
 
-  /* SECTION TITLE */
-  .sec-title { font-size: 18px; font-weight: 500; color: var(--gray-dark); margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 2px solid var(--red-mid); }
+/* SECTION */
+.sec{font-size:16px;font-weight:500;color:var(--gd);margin:1.5rem 0 .75rem;padding-bottom:6px;border-bottom:2px solid var(--rm);display:flex;align-items:center;gap:8px}
+.sec-badge{background:var(--r);color:#fff;border-radius:20px;font-size:10px;padding:2px 8px;font-weight:400}
 
-  /* RULES */
-  .rules-box { background: var(--red-light); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--red); }
-  .rules-box h3 { font-size: 14px; font-weight: 500; color: var(--red-dark); margin-bottom: 10px; }
-  .rule-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; color: #444; line-height: 1.55; }
-  .rule-num { background: var(--red); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.step{display:flex;align-items:flex-start;gap:12px;background:var(--wh);border:0.5px solid var(--gb);border-radius:10px;padding:12px 14px;transition:border-color .15s}
+.step:hover{border-color:var(--rm)}
+.step-num{background:var(--r);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.step-body h4{font-size:13px;font-weight:500;color:var(--gd);margin-bottom:2px}
+.step-body p{font-size:12px;color:var(--gt);line-height:1.55}
+.step-time{margin-left:auto;background:var(--rl);color:var(--rd);border-radius:20px;font-size:11px;padding:3px 8px;flex-shrink:0;align-self:center}
 
-  /* THEMES */
-  .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-  .theme-card { background: #fff; border: 1.5px solid #eee; border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s, transform 0.1s; text-align: center; }
-  .theme-card:hover { border-color: var(--red); transform: translateY(-2px); }
-  .theme-card.selected { border-color: var(--red); background: var(--red-light); }
-  .theme-card .emoji { font-size: 22px; margin-bottom: 6px; }
-  .theme-card p { font-size: 12px; color: #444; line-height: 1.5; }
+/* AWARD CARDS */
+.awards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.5rem}
+.award{background:var(--wh);border:0.5px solid var(--gb);border-radius:12px;padding:16px;text-align:center}
+.award-icon{width:40px;height:40px;border-radius:50%;background:var(--rl);margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.award-icon svg{width:20px;height:20px}
+.award h4{font-size:13px;font-weight:500;color:var(--gd);margin-bottom:4px}
+.award p{font-size:11px;color:var(--gt)}
 
-  /* TIMER */
-  .timer-box { background: var(--red); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-  .timer-display { color: #fff; font-size: 32px; font-weight: 500; font-variant-numeric: tabular-nums; }
-  .timer-label { color: rgba(255,255,255,0.8); font-size: 12px; }
-  .timer-controls { display: flex; gap: 8px; }
-  .timer-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: background 0.15s; }
-  .timer-btn:hover { background: rgba(255,255,255,0.35); }
+/* ACTIVITY PAGE */
+.rules-box{background:var(--rl);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;border-left:4px solid var(--r)}
+.rule-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:13px;color:#333;line-height:1.55}
+.rn{background:var(--r);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
 
-  /* PROMPT AREA */
-  .prompt-area textarea { width: 100%; border: 1.5px solid #ddd; border-radius: 10px; padding: 12px; font-size: 14px; line-height: 1.6; resize: vertical; min-height: 90px; color: var(--gray-dark); font-family: inherit; transition: border-color 0.15s; }
-  .prompt-area textarea:focus { outline: none; border-color: var(--red); }
-  .prompt-area label { font-size: 13px; color: #666; display: block; margin-bottom: 6px; }
-  .char-count { font-size: 12px; color: #999; text-align: right; margin-top: 4px; }
-  .submit-btn { background: var(--red); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; transition: opacity 0.15s; }
-  .submit-btn:hover { opacity: 0.88; }
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin-bottom:1.25rem}
+.tc{background:var(--wh);border:1.5px solid var(--gb);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;text-align:center}
+.tc:hover{border-color:var(--r);transform:translateY(-1px)}
+.tc.sel{border-color:var(--r);background:var(--rl)}
+.tc .em{font-size:20px;margin-bottom:6px}
+.tc p{font-size:12px;color:#444;line-height:1.5}
 
-  /* SCORES */
-  .score-row { display: flex; align-items: center; gap: 12px; padding: 12px; background: #fff; border: 0.5px solid #eee; border-radius: 10px; margin-bottom: 8px; }
-  .team-badge { background: var(--red); color: #fff; border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: 500; min-width: 70px; text-align: center; }
-  .stars { display: flex; gap: 4px; }
-  .star { width: 22px; height: 22px; background: #eee; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: background 0.1s; display: flex; align-items: center; justify-content: center; }
-  .star.on { background: #FFC107; }
-  .score-total { margin-left: auto; font-size: 16px; font-weight: 500; color: var(--red-dark); min-width: 32px; text-align: right; }
+.timer-box{background:var(--r);border-radius:12px;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.timer-disp{color:#fff;font-size:36px;font-weight:500;font-variant-numeric:tabular-nums}
+.timer-lbl{color:rgba(255,255,255,.75);font-size:11px;margin-bottom:2px}
+.tbtn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;transition:background .15s}
+.tbtn:hover{background:rgba(255,255,255,.35)}
+.tctrls{display:flex;gap:6px;flex-wrap:wrap}
 
-  /* QUIZ */
-  .quiz-card { background: #fff; border: 0.5px solid #eee; border-radius: 14px; padding: 1.5rem; }
-  .quiz-q { font-size: 15px; font-weight: 500; color: var(--gray-dark); margin-bottom: 1rem; line-height: 1.5; }
-  .quiz-progress { font-size: 12px; color: #999; margin-bottom: 1rem; }
-  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
-  .quiz-opt { background: var(--gray-light); border: 1.5px solid #eee; border-radius: 8px; padding: 10px 14px; font-size: 13px; cursor: pointer; text-align: left; transition: all 0.15s; color: var(--gray-dark); }
-  .quiz-opt:hover { border-color: var(--red); background: var(--red-light); }
-  .quiz-opt.correct { background: #eafaea; border-color: #4CAF50; color: #2e7d32; }
-  .quiz-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
-  .quiz-opt.disabled { cursor: default; }
-  .quiz-feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.5; }
-  .quiz-feedback.ok { background: #eafaea; color: #2e7d32; }
-  .quiz-feedback.fail { background: var(--red-light); color: var(--red-dark); }
-  .quiz-next { background: var(--red); color: #fff; border: none; padding: 9px 22px; border-radius: 8px; font-size: 13px; cursor: pointer; margin-top: 12px; }
-  .quiz-result { text-align: center; padding: 2rem 1rem; }
-  .quiz-result .big { font-size: 48px; font-weight: 500; color: var(--red); }
-  .quiz-result p { color: #555; font-size: 14px; margin-top: 8px; }
-  .quiz-restart { background: var(--red); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; margin-top: 16px; }
+.parea textarea{width:100%;border:1.5px solid var(--gb);border-radius:10px;padding:12px;font-size:14px;line-height:1.6;resize:vertical;min-height:90px;color:var(--gd);font-family:inherit;transition:border-color .15s}
+.parea textarea:focus{outline:none;border-color:var(--r)}
+.parea label{font-size:13px;color:#666;display:block;margin-bottom:6px}
+.char-count{font-size:11px;color:#999;text-align:right;margin-top:4px}
+.sbtn{background:var(--r);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;margin-top:10px;transition:opacity .15s}
+.sbtn:hover{opacity:.88}
 
-  /* EXAMPLES */
-  .example-card { background: #fff; border: 0.5px solid #eee; border-radius: 12px; padding: 1.25rem; margin-bottom: 12px; border-left: 4px solid var(--red); }
-  .example-card .tag { display: inline-block; background: var(--red-light); color: var(--red-dark); border-radius: 20px; font-size: 11px; padding: 3px 10px; margin-bottom: 8px; }
-  .example-card p { font-size: 13px; color: #444; line-height: 1.65; }
-  .example-card .theme-label { font-size: 12px; font-weight: 500; color: var(--red-dark); margin-bottom: 4px; }
+/* SCORING */
+.score-row{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--wh);border:0.5px solid var(--gb);border-radius:10px;margin-bottom:8px;flex-wrap:wrap}
+.tbadge{background:var(--r);color:#fff;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:500;min-width:65px;text-align:center}
+.clbl{font-size:11px;color:#888;flex-shrink:0}
+.stars{display:flex;gap:3px}
+.star{width:20px;height:20px;background:#eee;border:none;border-radius:4px;cursor:pointer;font-size:12px;transition:background .1s;display:flex;align-items:center;justify-content:center;color:#999}
+.star.on{background:#FFC107;color:#fff}
+.stotal{margin-left:auto;font-size:18px;font-weight:500;color:var(--rd);min-width:28px;text-align:right}
 
-  /* BADGE */
-  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
-  .badge { background: var(--red-light); border: 1px solid var(--red-mid); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--red-dark); display: flex; align-items: center; gap: 6px; }
+/* LEADERBOARD */
+.lb{display:flex;flex-direction:column;gap:8px;margin-top:.5rem}
+.lb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--wh);border:0.5px solid var(--gb);border-radius:10px;transition:border-color .2s}
+.lb-row.first{border-color:var(--r);background:var(--rl)}
+.lb-rank{font-size:18px;font-weight:500;width:28px;text-align:center;color:var(--r)}
+.lb-name{font-size:13px;font-weight:500;color:var(--gd);flex:1}
+.lb-bar-wrap{flex:2;height:8px;background:#eee;border-radius:4px;overflow:hidden}
+.lb-bar{height:100%;background:var(--r);border-radius:4px;transition:width .6s ease}
+.lb-score{font-size:14px;font-weight:500;color:var(--rd);min-width:30px;text-align:right}
 
-  /* IMPROV */
-  .improv-box { background: #fff; border: 2px dashed var(--red-mid); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
-  .improv-box h3 { font-size: 16px; font-weight: 500; color: var(--red-dark); margin-bottom: 6px; }
-  .improv-box p { font-size: 14px; color: #555; margin-bottom: 1rem; line-height: 1.6; }
-  .improv-prompt { background: var(--red-light); border-radius: 10px; padding: 12px 16px; font-size: 14px; color: var(--red-dark); font-weight: 500; margin-bottom: 1rem; min-height: 40px; }
-  .gen-btn { background: var(--red); color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 13px; cursor: pointer; }
-  .countdown { font-size: 40px; font-weight: 500; color: var(--red); margin: 6px 0; }
+/* IMPROV */
+.improv-box{background:var(--wh);border:2px dashed var(--rm);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;text-align:center}
+.improv-box h3{font-size:15px;font-weight:500;color:var(--rd);margin-bottom:6px}
+.improv-box p{font-size:13px;color:#555;margin-bottom:1rem;line-height:1.6}
+.improv-prompt{background:var(--rl);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--rd);font-weight:500;margin-bottom:.75rem;min-height:44px;line-height:1.5}
+.countdown{font-size:44px;font-weight:500;color:var(--r);margin:4px 0}
+.gbtn{background:var(--r);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;cursor:pointer;transition:opacity .15s}
+.gbtn:hover{opacity:.88}
+.gbtn-o{background:var(--wh);color:var(--r);border:1.5px solid var(--r);margin-left:6px}
+
+/* QUIZ */
+.qcard{background:var(--wh);border:0.5px solid var(--gb);border-radius:14px;padding:1.5rem}
+.qprog-wrap{height:5px;background:#eee;border-radius:3px;margin-bottom:1rem;overflow:hidden}
+.qprog-bar{height:100%;background:var(--r);border-radius:3px;transition:width .4s ease}
+.qmeta{display:flex;justify-content:space-between;font-size:12px;color:#999;margin-bottom:.75rem}
+.qq{font-size:15px;font-weight:500;color:var(--gd);margin-bottom:1rem;line-height:1.55}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{background:var(--gl);border:1.5px solid var(--gb);border-radius:8px;padding:10px 14px;font-size:13px;cursor:pointer;text-align:left;transition:all .15s;color:var(--gd)}
+.qopt:hover:not(.disabled){border-color:var(--r);background:var(--rl)}
+.qopt.correct{background:#eafaea;border-color:#4CAF50;color:#2e7d32}
+.qopt.wrong{background:var(--rl);border-color:var(--r);color:var(--rd)}
+.qopt.disabled{cursor:default}
+.qfb{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.55}
+.qfb.ok{background:#eafaea;color:#2e7d32}
+.qfb.fail{background:var(--rl);color:var(--rd)}
+.qnext{background:var(--r);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-top:10px}
+.qresult{text-align:center;padding:2rem 1rem}
+.qresult .big{font-size:52px;font-weight:500;color:var(--r)}
+.qresult p{color:#555;font-size:14px;margin-top:8px}
+.qresult .medal{font-size:40px;margin-bottom:8px}
+.qrestart{background:var(--r);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin-top:14px}
+.qscore-strip{display:flex;gap:10px;justify-content:center;margin-top:1rem}
+.qsc{text-align:center;background:var(--rl);border-radius:10px;padding:10px 16px}
+.qsc-n{font-size:22px;font-weight:500;color:var(--r)}
+.qsc-l{font-size:11px;color:var(--rd);margin-top:2px}
+
+/* EXAMPLES */
+.ex-card{background:var(--wh);border:0.5px solid var(--gb);border-radius:12px;padding:1.25rem;margin-bottom:10px;border-left:4px solid var(--r)}
+.ex-card .tag{display:inline-block;background:var(--rl);color:var(--rd);border-radius:20px;font-size:11px;padding:2px 10px;margin-bottom:6px}
+.ex-card .tlabel{font-size:12px;font-weight:500;color:var(--rd);margin-bottom:4px}
+.ex-card p{font-size:13px;color:#444;line-height:1.65}
+.copy-btn{background:transparent;border:1px solid var(--rm);color:var(--rd);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;float:right;margin-top:4px;transition:all .15s}
+.copy-btn:hover{background:var(--rl)}
+
+/* SENSE BANK */
+.sense-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.5rem}
+.sense-pill{border-radius:20px;font-size:12px;padding:5px 12px;cursor:pointer;transition:all .15s;border:1px solid}
+.sense-pill.gorsel{background:#fff;border-color:#E24B4A;color:#A32D2D}
+.sense-pill.isitsel{background:#fff;border-color:#378ADD;color:#185FA5}
+.sense-pill.koku{background:#fff;border-color:#639922;color:#3B6D11}
+.sense-pill.dokunu{background:#fff;border-color:#BA7517;color:#854F0B}
+.sense-pill.tat{background:#fff;border-color:#D4537E;color:#993556}
+.sense-pill:hover{opacity:.8;transform:scale(1.04)}
+.sense-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:.75rem}
+.sl-item{font-size:11px;display:flex;align-items:center;gap:4px;color:#555}
+.sl-dot{width:9px;height:9px;border-radius:50%}
+
+/* TIPS */
+.tip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
+.tip-card{background:var(--wh);border:0.5px solid var(--gb);border-radius:12px;padding:14px}
+.tip-card .tip-icon{width:32px;height:32px;background:var(--rl);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.tip-card h4{font-size:13px;font-weight:500;color:var(--gd);margin-bottom:5px}
+.tip-card p{font-size:12px;color:var(--gt);line-height:1.55}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--gd);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--wh);border-radius:16px;padding:2rem;max-width:420px;width:90%;text-align:center}
+.modal h3{font-size:18px;font-weight:500;color:var(--gd);margin-bottom:8px}
+.modal p{font-size:13px;color:#555;margin-bottom:1.25rem;line-height:1.6}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+.mbtn{padding:9px 22px;border-radius:8px;font-size:13px;cursor:pointer;border:none;font-weight:500}
+.mbtn-r{background:var(--r);color:#fff}
+.mbtn-g{background:var(--gb);color:var(--gd)}
+
+/* THEME REVEAL */
+.theme-reveal{background:var(--r);border-radius:12px;padding:1rem 1.5rem;text-align:center;margin-bottom:1.25rem;display:none}
+.theme-reveal p{color:#fff;font-size:14px}
+.theme-reveal .big-em{font-size:36px;margin-bottom:4px}
+.theme-reveal .tname{font-size:16px;font-weight:500;color:#fff;margin-top:4px}
 </style>
 
+<h2 class="sr-only">GENÇTEK Prompt Master etkinlik ve quiz platformu</h2>
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="submit-modal">
+  <div class="modal">
+    <div style="font-size:36px;margin-bottom:10px">&#x1F4AC;</div>
+    <h3>Prompt Gönderildi!</h3>
+    <p id="modal-msg">Harika bir prompt yazdın! Şimdi oylama bölümüne geçebilirsiniz.</p>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-r" onclick="closeModal();showPage('activity');document.getElementById('score-anchor').scrollIntoView({behavior:'smooth'})">Oylama Yap</button>
+      <button class="mbtn mbtn-g" onclick="closeModal()">Tamam</button>
+    </div>
+  </div>
+</div>
+
 <div class="nav">
-  <div class="nav-logo">GENÇTEK <span>Prompt Master</span></div>
+  <div class="nav-logo"><div class="logo-dot"></div>GENÇTEK</div>
   <div class="nav-links">
-    <button class="active" onclick="showPage('home')">Ana Sayfa</button>
-    <button onclick="showPage('activity')">Etkinlik</button>
-    <button onclick="showPage('quiz')">Quiz</button>
-    <button onclick="showPage('examples')">Örnekler</button>
+    <button class="nb active" onclick="showPage('home')">Ana Sayfa</button>
+    <button class="nb" onclick="showPage('activity')">Etkinlik</button>
+    <button class="nb" onclick="showPage('quiz')">Quiz</button>
+    <button class="nb" onclick="showPage('examples')">Örnekler</button>
+    <button class="nb" onclick="showPage('tips')">İpuçları</button>
   </div>
 </div>
 
@@ -127,309 +219,447 @@
 <div class="page active" id="page-home">
   <div class="hero">
     <h1>Prompt Master: Hayal Gücü Yarışması</h1>
-    <p>Gençtek etkinliğine hoş geldin! Takımını kur, temani seç ve en yaratıcı, komik ya da etkileyici prompt'u yaz.</p>
-    <button class="hero-btn" onclick="showPage('activity')">Etkinliği Başlat</button>
-  </div>
-  <div class="cards">
-    <div class="card card-accent">
-      <div class="card-icon">&#x1F4CB;</div>
-      <h3>Etkinlik Planı</h3>
-      <p>Adım adım rehber, yazma kuralları ve tema kartları seni bekliyor.</p>
-    </div>
-    <div class="card card-accent">
-      <div class="card-icon">&#x23F1;</div>
-      <h3>Geri Sayım Sayacı</h3>
-      <p>7 dakikalık yazma ve 30 saniyelik doğaçlama süreleri için yerleşik zamanlayıcı.</p>
-    </div>
-    <div class="card card-accent">
-      <div class="card-icon">&#x2B50;</div>
-      <h3>Puanlama Sistemi</h3>
-      <p>Komiklik, yaratıcılık ve akıcılık kriterlerine göre takım bazlı puanlama.</p>
-    </div>
-    <div class="card card-accent">
-      <div class="card-icon">&#x1F4A1;</div>
-      <h3>Prompt Quiz</h3>
-      <p>Yapay zeka prompt yazımı hakkında eğlenceli sorularla kendini test et.</p>
+    <p>Takımını kur, temani seç, en yaratıcı prompt'u yaz. Yapay zeka ile çalışmanın en eğlenceli yolu GENÇTEK'te!</p>
+    <div class="hero-btns">
+      <button class="hbtn hbtn-w" onclick="showPage('activity')">Etkinliği Başlat</button>
+      <button class="hbtn hbtn-o" onclick="showPage('quiz')">Quiz'e Gir</button>
     </div>
   </div>
-  <p class="sec-title">Etkinlik Aşamaları</p>
-  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:2rem;">
-    <div class="score-row">
-      <div class="team-badge" style="background:#E24B4A;">Hazırlık</div>
-      <div style="font-size:13px;color:#444;">Takımları oluşturun, prompt kartlarını dağıtın <span style="color:#999;font-size:12px;">– 5 dk</span></div>
-    </div>
-    <div class="score-row">
-      <div class="team-badge" style="background:#c9403f;">Kurallar</div>
-      <div style="font-size:13px;color:#444;">Yazma kurallarını okuyun ve benimseyin <span style="color:#999;font-size:12px;">– 2 dk</span></div>
-    </div>
-    <div class="score-row">
-      <div class="team-badge" style="background:#b03838;">Yazma</div>
-      <div style="font-size:13px;color:#444;">Prompt'ları yazın, sayaç başlıyor! <span style="color:#999;font-size:12px;">– 7 dk</span></div>
-    </div>
-    <div class="score-row">
-      <div class="team-badge" style="background:#993333;">Sunum</div>
-      <div style="font-size:13px;color:#444;">Prompt'ları sesli okuyun, puanlayın <span style="color:#999;font-size:12px;">– 10 dk</span></div>
-    </div>
-    <div class="score-row">
-      <div class="team-badge" style="background:#7d2828;">Doğaçlama</div>
-      <div style="font-size:13px;color:#444;">30 saniyede cümle başlangıcı yazın <span style="color:#999;font-size:12px;">– 5 dk</span></div>
-    </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Tema</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Tur</div></div>
+    <div class="stat"><div class="stat-num" id="home-q-count">10</div><div class="stat-lbl">Quiz Sorusu</div></div>
+    <div class="stat"><div class="stat-num">30dk</div><div class="stat-lbl">Toplam Süre</div></div>
   </div>
-  <div class="badge-row">
-    <div class="badge">&#x1F3C6; En Yaratıcı: Dijital Kahve Fincanı</div>
-    <div class="badge">&#x1F602; En Komik: Güldürme Uzmanı</div>
-    <div class="badge">&#x270D; En Hızlı: Hızlı Kalem</div>
+
+  <div class="sec">Etkinlik Aşamaları <span class="sec-badge">5 adım</span></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Hazırlık</h4><p>Katılımcıları 2-4 kişilik takımlara ayır, Prompt Kartı dağıt.</p></div><div class="step-time">5 dk</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Yazma Kuralları</h4><p>Kuralları oku: 2 cümle, 3 duyu, 1 sürpriz öge.</p></div><div class="step-time">2 dk</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Prompt Yazma</h4><p>Takımlar seçtikleri temaya göre prompt yazar. Sayaç çalışıyor!</p></div><div class="step-time">7 dk</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Sunum ve Oylama</h4><p>Her takım prompt'unu sesli okur, komiklik/yaratıcılık/akıcılık puanlanır.</p></div><div class="step-time">10 dk</div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Bonus Doğaçlama</h4><p>30 saniyede rastgele prompt'a cümle başlangıcı yazılır.</p></div><div class="step-time">5 dk</div></div>
+  </div>
+
+  <div class="sec">Ödüller</div>
+  <div class="awards">
+    <div class="award">
+      <div class="award-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8 14l-2 7 6-3 6 3-2-7"/></svg></div>
+      <h4>Dijital Kahve Fincanı</h4>
+      <p>En yaratıcı prompt</p>
+    </div>
+    <div class="award">
+      <div class="award-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <h4>Güldürme Uzmanı</h4>
+      <p>En komik prompt</p>
+    </div>
+    <div class="award">
+      <div class="award-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <h4>Hızlı Kalem</h4>
+      <p>En hızlı doğaçlama</p>
+    </div>
   </div>
 </div>
 
 <!-- ACTIVITY -->
 <div class="page" id="page-activity">
-  <p class="sec-title">Yazma Kuralları</p>
+  <div class="sec">Yazma Kuralları</div>
   <div class="rules-box">
-    <h3>Prompt yazarken şu 3 kurala uy:</h3>
-    <div class="rule-item"><div class="rule-num">1</div><div>Prompt <strong>en fazla 2 cümle</strong> olmalı.</div></div>
-    <div class="rule-item"><div class="rule-num">2</div><div>İçinde <strong>en az 3 duyu</strong> (görme, işitme, koklama, dokunma, tatma) ile ilgili kelime bulunmalı.</div></div>
-    <div class="rule-item"><div class="rule-num">3</div><div>Bir <strong>sürpriz öge</strong> eklenmeli: zaman makinesi, konuşan hayvan, sihirli nesne vb.</div></div>
+    <div class="rule-item"><div class="rn">1</div><div>Prompt <strong>en fazla 2 cümle</strong> olmalı.</div></div>
+    <div class="rule-item"><div class="rn">2</div><div>En az <strong>3 duyu</strong> kelimesi içermeli: görme, işitme, koklama, dokunma, tatma.</div></div>
+    <div class="rule-item"><div class="rn">3</div><div>Bir <strong>sürpriz öge</strong> eklenmeli: zaman makinesi, konuşan hayvan, sihirli nesne vb.</div></div>
   </div>
 
-  <p class="sec-title">Tema Seç</p>
-  <div class="themes-grid" id="themes-grid">
-    <div class="theme-card" onclick="selectTheme(this,'Zaman yolculuğu ama kahvaltı masasında')"><div class="emoji">&#x23F0;</div><p>Zaman yolculuğu ama kahvaltı masasında</p></div>
-    <div class="theme-card" onclick="selectTheme(this,'Bir penguenin gizli ajan olması')"><div class="emoji">&#x1F427;</div><p>Bir penguenin gizli ajan olması</p></div>
-    <div class="theme-card" onclick="selectTheme(this,'Pizza yiyen bir robotun felsefe yapması')"><div class="emoji">&#x1F355;</div><p>Pizza yiyen bir robotun felsefe yapması</p></div>
-    <div class="theme-card" onclick="selectTheme(this,'Uyuyamayan bir ayın dünyaya mektubu')"><div class="emoji">&#x1F319;</div><p>Uyuyamayan bir ayın dünyaya mektubu</p></div>
-    <div class="theme-card" onclick="selectTheme(this,'Bir palyaçonun çok ciddi bir iş görüşmesi')"><div class="emoji">&#x1F3AD;</div><p>Bir palyaçonun çok ciddi bir iş görüşmesi</p></div>
+  <div class="sec">Tema Seç <span class="sec-badge">rastgele için tıkla</span></div>
+  <div class="tgrid" id="tgrid">
+    <div class="tc" onclick="selTheme(this,'Zaman yolculuğu ama kahvaltı masasında','&#x23F0;')"><div class="em">&#x23F0;</div><p>Zaman yolculuğu ama kahvaltı masasında</p></div>
+    <div class="tc" onclick="selTheme(this,'Bir penguenin gizli ajan olması','&#x1F427;')"><div class="em">&#x1F427;</div><p>Bir penguenin gizli ajan olması</p></div>
+    <div class="tc" onclick="selTheme(this,'Pizza yiyen bir robotun felsefe yapması','&#x1F355;')"><div class="em">&#x1F355;</div><p>Pizza yiyen bir robotun felsefe yapması</p></div>
+    <div class="tc" onclick="selTheme(this,'Uyuyamayan bir ayın dünyaya mektubu','&#x1F319;')"><div class="em">&#x1F319;</div><p>Uyuyamayan bir ayın dünyaya mektubu</p></div>
+    <div class="tc" onclick="selTheme(this,'Bir palyaçonun çok ciddi bir iş görüşmesi','&#x1F3AD;')"><div class="em">&#x1F3AD;</div><p>Bir palyaçonun çok ciddi bir iş görüşmesi</p></div>
   </div>
-  <div id="selected-theme" style="display:none;background:var(--red-light);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red-dark);margin-bottom:1.5rem;font-weight:500;"></div>
+  <button class="gbtn" style="margin-bottom:1rem" onclick="randTheme()">Rastgele Tema</button>
 
-  <p class="sec-title">Sayaç</p>
+  <div class="theme-reveal" id="theme-reveal">
+    <div class="big-em" id="reveal-em"></div>
+    <div class="tname" id="reveal-name"></div>
+  </div>
+
+  <div class="sec">Sayaç</div>
   <div class="timer-box">
-    <div>
-      <div class="timer-label">Kalan Süre</div>
-      <div class="timer-display" id="timer-display">07:00</div>
-    </div>
-    <div class="timer-controls">
-      <button class="timer-btn" onclick="setTimer(420)">7 dk</button>
-      <button class="timer-btn" onclick="setTimer(30)">30 sn</button>
-      <button class="timer-btn" id="start-btn" onclick="toggleTimer()">Başlat</button>
+    <div><div class="timer-lbl">Kalan Süre</div><div class="timer-disp" id="tdisp">07:00</div></div>
+    <div class="tctrls">
+      <button class="tbtn" onclick="setT(420)">7 dk</button>
+      <button class="tbtn" onclick="setT(600)">10 dk</button>
+      <button class="tbtn" onclick="setT(30)">30 sn</button>
+      <button class="tbtn" id="tstart" onclick="toggleT()">Başlat</button>
     </div>
   </div>
 
-  <p class="sec-title">Prompt Yazma Alanı</p>
-  <div class="prompt-area" style="margin-bottom:1.5rem;">
+  <div class="sec">Prompt Yaz</div>
+  <div class="parea" style="margin-bottom:1.25rem">
     <label>Seçtiğin temaya göre prompt'unu yaz:</label>
-    <textarea id="prompt-text" placeholder="Prompt'unu buraya yaz..." maxlength="400" oninput="updateChar()"></textarea>
-    <div class="char-count"><span id="char-count">0</span>/400</div>
-    <button class="submit-btn" onclick="submitPrompt()">Gönder ve Oyla</button>
+    <textarea id="ptext" placeholder="Prompt'unu buraya yaz..." maxlength="400" oninput="updChar()"></textarea>
+    <div class="char-count"><span id="ccount">0</span>/400 karakter</div>
+    <button class="sbtn" onclick="submitP()">Gönder ve Oyla</button>
   </div>
 
-  <p class="sec-title">Takım Puanları</p>
-  <div id="score-section">
-    <div class="score-row" id="t1">
-      <div class="team-badge">Takım 1</div>
-      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
-      <div class="stars" id="stars-t1-funny"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
-      <div class="stars" id="stars-t1-creative"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
-      <div class="stars" id="stars-t1-clear"></div>
-      <div class="score-total" id="total-t1">0</div>
-    </div>
-    <div class="score-row" id="t2">
-      <div class="team-badge">Takım 2</div>
-      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
-      <div class="stars" id="stars-t2-funny"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
-      <div class="stars" id="stars-t2-creative"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
-      <div class="stars" id="stars-t2-clear"></div>
-      <div class="score-total" id="total-t2">0</div>
-    </div>
-    <div class="score-row" id="t3">
-      <div class="team-badge">Takım 3</div>
-      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
-      <div class="stars" id="stars-t3-funny"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
-      <div class="stars" id="stars-t3-creative"></div>
-      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
-      <div class="stars" id="stars-t3-clear"></div>
-      <div class="score-total" id="total-t3">0</div>
-    </div>
-  </div>
+  <div id="score-anchor"></div>
+  <div class="sec">Takım Puanları <span class="sec-badge">1–5 yıldız</span></div>
+  <div id="scoreSection"></div>
 
-  <p class="sec-title" style="margin-top:1.5rem;">Bonus: Prompt Doğaçlama</p>
+  <div class="sec">Liderlik Tablosu</div>
+  <div class="lb" id="lb"></div>
+
+  <div class="sec" style="margin-top:1.5rem">Bonus: Doğaçlama Turu</div>
   <div class="improv-box">
     <h3>30 Saniye Doğaçlama!</h3>
-    <p>Jüri rastgele bir prompt okur, takımlar 30 saniyede bir cümlelik hikaye başlangıcı yazar.</p>
+    <p>Rastgele prompt al, 30 saniyede bir cümlelik hikaye başlangıcı yaz.</p>
     <div class="improv-prompt" id="improv-prompt">Bir prompt oluşturmak için butona bas.</div>
-    <div class="countdown" id="improv-countdown" style="display:none;">30</div>
-    <button class="gen-btn" onclick="generateImprov()">Rastgele Prompt Al</button>
-    <button class="gen-btn" style="background:#fff;color:var(--red);border:1.5px solid var(--red);margin-left:8px;" onclick="startImprovTimer()">Sayacı Başlat</button>
+    <div class="countdown" id="improv-cd" style="display:none">30</div>
+    <button class="gbtn" onclick="genImprov()">Rastgele Prompt</button>
+    <button class="gbtn gbtn-o" onclick="startImprovT()">Sayacı Başlat</button>
   </div>
 </div>
 
 <!-- QUIZ -->
 <div class="page" id="page-quiz">
-  <p class="sec-title">Prompt Yazma Quiz'i</p>
-  <div class="quiz-card" id="quiz-container"></div>
+  <div class="sec">Prompt Yazma Quiz'i <span class="sec-badge" id="quiz-score-badge">0 / 10</span></div>
+  <div class="qcard" id="qcard"></div>
 </div>
 
 <!-- EXAMPLES -->
 <div class="page" id="page-examples">
-  <p class="sec-title">İlham Veren Örnek Prompt'lar</p>
-  <div class="example-card">
-    <div class="tag">Örnek</div>
-    <div class="theme-label">Zaman yolculuğu ama kahvaltı masasında</div>
+  <div class="sec">Örnek Prompt'lar</div>
+  <div class="ex-card">
+    <div class="tag">Örnek 1</div>
+    <div class="tlabel">Zaman yolculuğu ama kahvaltı masasında</div>
+    <button class="copy-btn" onclick="copyText(this,'Kahvaltıda mısır gevreğinin içinden bir zaman portalı açılıyor ve dinozorlar seninle birlikte kaseyi yemek istiyor. Sütün biteceğini fark eden bir dinozorun gözlerindeki paniği anlat.')">Kopyala</button>
     <p>Kahvaltıda mısır gevreğinin içinden bir zaman portalı açılıyor ve dinozorlar seninle birlikte kaseyi yemek istiyor. Sütün biteceğini fark eden bir dinozorun gözlerindeki paniği anlat.</p>
   </div>
-  <div class="example-card">
-    <div class="tag">Örnek</div>
-    <div class="theme-label">Konuşan bir çorap</div>
+  <div class="ex-card">
+    <div class="tag">Örnek 2</div>
+    <div class="tlabel">Konuşan çorap</div>
+    <button class="copy-btn" onclick="copyText(this,'Çorabının teki kaybolduğunda diğer çorap aniden konuşmaya başlıyor: Onu çamaşır makinesine yollama, orası bir boyut kapısı! Çorabın ses tonu nasıl ve ona ne cevap veriyorsun?')">Kopyala</button>
     <p>Çorabının teki kaybolduğunda diğer çorap aniden konuşmaya başlıyor: "Onu çamaşır makinesine yollama, orası bir boyut kapısı!" Çorabın ses tonu nasıl ve ona ne cevap veriyorsun?</p>
   </div>
-  <div class="example-card">
-    <div class="tag">Örnek</div>
-    <div class="theme-label">Pizza yiyen bir robotun felsefesi</div>
+  <div class="ex-card">
+    <div class="tag">Örnek 3</div>
+    <div class="tlabel">Pizza yiyen robot</div>
+    <button class="copy-btn" onclick="copyText(this,'Mantar kokusunu ilk kez algılayan bir robot, varoluşun anlamını pizza dilimlerinde arıyor; sıcak peynirin dokunuşu onu düşündürüyor: Erime özgürlük müdür yoksa son mu?')">Kopyala</button>
     <p>Mantar kokusunu ilk kez algılayan bir robot, varoluşun anlamını pizza dilimlerinde arıyor; sıcak peynirin dokunuşu onu düşündürüyor: "Erime özgürlük müdür yoksa son mu?"</p>
   </div>
-  <div class="example-card">
-    <div class="tag">Örnek</div>
-    <div class="theme-label">Gizli ajan penguen</div>
+  <div class="ex-card">
+    <div class="tag">Örnek 4</div>
+    <div class="tlabel">Gizli ajan penguen</div>
+    <button class="copy-btn" onclick="copyText(this,'Buz gibi soğuk bir depo kokusunda minik kanatlarıyla şifreli mesajı taşıyan penguen, tüylerinin arasında gizli kulaklıkla tiz bir sesle Misyon tamamlandı diye fısıldıyor.')">Kopyala</button>
     <p>Buz gibi soğuk bir depo kokusunda minik kanatlarıyla şifreli mesajı taşıyan penguen, tüylerinin arasında gizli kulaklıkla tiz bir sesle "Misyon tamamlandı" diye fısıldıyor.</p>
   </div>
-  <div class="example-card">
-    <div class="tag">Örnek</div>
-    <div class="theme-label">Palyaçonun iş görüşmesi</div>
+  <div class="ex-card">
+    <div class="tag">Örnek 5</div>
+    <div class="tlabel">Palyaçonun iş görüşmesi</div>
+    <button class="copy-btn" onclick="copyText(this,'Kırmızı burunun çıkardığı cıvıltı sesi odayı doldururken palyaço, hissettiği gerginliği gizlemek için lavanta kolonyasını omzuna sıkıyor ve soğuk metal masaya ciddiyet yüklü ıslak ellerini koyuyor.')">Kopyala</button>
     <p>Kırmızı burunun çıkardığı cıvıltı sesi odayı doldururken palyaço, hissettiği gerginliği gizlemek için lavanta kolonyasını omzuna sıkıyor ve soğuk metal masaya ciddiyet yüklü ıslak ellerini koyuyor.</p>
   </div>
-  <p class="sec-title" style="margin-top:2rem;">Duyu Kelimeleri Bankası</p>
-  <div class="badge-row">
-    <div class="badge" style="background:#fff;border-color:#E24B4A;">&#x1F441; Parlıyor</div>
-    <div class="badge" style="background:#fff;border-color:#E24B4A;">&#x1F441; Loş</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Fısıltı</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Tiz ses</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Çatırtı</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Lavanta</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Mantar kokusu</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Yanık plastik</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Islak</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Soğuk metal</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Pürüzlü</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Tuzlu</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Ekşi</div>
-    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Tatlı</div>
+
+  <div class="sec" style="margin-top:1.5rem">Duyu Kelimeleri Bankası</div>
+  <div class="sense-legend">
+    <div class="sl-item"><div class="sl-dot" style="background:#E24B4A"></div>Görsel</div>
+    <div class="sl-item"><div class="sl-dot" style="background:#378ADD"></div>İşitsel</div>
+    <div class="sl-item"><div class="sl-dot" style="background:#639922"></div>Koku</div>
+    <div class="sl-item"><div class="sl-dot" style="background:#BA7517"></div>Dokunma</div>
+    <div class="sl-item"><div class="sl-dot" style="background:#D4537E"></div>Tat</div>
+  </div>
+  <div class="sense-bank">
+    <span class="sense-pill gorsel" onclick="insertSense(this)">parlayan</span>
+    <span class="sense-pill gorsel" onclick="insertSense(this)">loş</span>
+    <span class="sense-pill gorsel" onclick="insertSense(this)">kıpıl kıpıl</span>
+    <span class="sense-pill gorsel" onclick="insertSense(this)">donuk</span>
+    <span class="sense-pill gorsel" onclick="insertSense(this)">parıltılı</span>
+    <span class="sense-pill isitsel" onclick="insertSense(this)">fısıltı</span>
+    <span class="sense-pill isitsel" onclick="insertSense(this)">tiz ses</span>
+    <span class="sense-pill isitsel" onclick="insertSense(this)">çatırtı</span>
+    <span class="sense-pill isitsel" onclick="insertSense(this)">homurtu</span>
+    <span class="sense-pill isitsel" onclick="insertSense(this)">yankı</span>
+    <span class="sense-pill koku" onclick="insertSense(this)">lavanta</span>
+    <span class="sense-pill koku" onclick="insertSense(this)">yanık plastik</span>
+    <span class="sense-pill koku" onclick="insertSense(this)">ıslak toprak</span>
+    <span class="sense-pill koku" onclick="insertSense(this)">mantar kokusu</span>
+    <span class="sense-pill koku" onclick="insertSense(this)">deniz tuzu</span>
+    <span class="sense-pill dokunu" onclick="insertSense(this)">ıslak</span>
+    <span class="sense-pill dokunu" onclick="insertSense(this)">soğuk metal</span>
+    <span class="sense-pill dokunu" onclick="insertSense(this)">pürüzlü</span>
+    <span class="sense-pill dokunu" onclick="insertSense(this)">kadifemsi</span>
+    <span class="sense-pill dokunu" onclick="insertSense(this)">keskin</span>
+    <span class="sense-pill tat" onclick="insertSense(this)">tuzlu</span>
+    <span class="sense-pill tat" onclick="insertSense(this)">ekşi</span>
+    <span class="sense-pill tat" onclick="insertSense(this)">metalik</span>
+    <span class="sense-pill tat" onclick="insertSense(this)">tatlı</span>
+    <span class="sense-pill tat" onclick="insertSense(this)">acı</span>
+  </div>
+  <p style="font-size:12px;color:#999;margin-top:-4px">Bir kelimeye tıkla — prompt alanına kopyalanır.</p>
+</div>
+
+<!-- TIPS -->
+<div class="page" id="page-tips">
+  <div class="sec">Prompt Yazma İpuçları</div>
+  <div class="tip-grid">
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <h4>Bağlamı net ver</h4>
+      <p>Yapay zekanın tahmin etmesi gerekmeyecek kadar netleştir. Kim, nerede, ne zaman, hangi amaçla?</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h4>Rol ata</h4>
+      <p>"Sen bir müzisyensin..." ile başlamak yapay zekanın bakış açısını anında değiştirir.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
+      <h4>Format belirt</h4>
+      <p>"Madde madde yaz", "hikaye olarak anlat", "diyalog biçiminde ver" gibi yönergeler çıktıyı şekillendirir.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h4>Ton seç</h4>
+      <p>Komik, ciddi, şiirsel, teknik... Tonu belirlemek çıktının kalitesini ikiye katlar.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <h4>Örnek ekle</h4>
+      <p>İstediğin sonuca benzer bir örnek vermek yapay zekanın doğru yönde gitmesini sağlar.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <h4>Test et ve geliştir</h4>
+      <p>İlk sonuç mükemmel olmayabilir. Küçük değişikliklerle prompt'u iyileştir.</p>
+    </div>
+  </div>
+
+  <div class="sec">Prompt Anatomi Rehberi</div>
+  <div style="background:var(--wh);border:0.5px solid var(--gb);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+    <div style="font-size:13px;color:#444;line-height:1.8;background:var(--rl);border-radius:8px;padding:12px 16px;margin-bottom:12px">
+      <span style="background:var(--r);color:#fff;border-radius:4px;padding:2px 6px;font-size:11px;margin-right:4px">ROL</span> Sen deneyimli bir hikaye yazarısın. <span style="background:#378ADD;color:#fff;border-radius:4px;padding:2px 6px;font-size:11px;margin:0 4px">BAĞLAM</span> 8 yaşındaki bir çocuk için <span style="background:#639922;color:#fff;border-radius:4px;padding:2px 6px;font-size:11px;margin:0 4px">GÖREV</span> konuşan bir kalemtıraşın maceralarını anlat. <span style="background:#BA7517;color:#fff;border-radius:4px;padding:2px 6px;font-size:11px;margin:0 4px">FORMAT</span> 3 paragraf, <span style="background:#D4537E;color:#fff;border-radius:4px;padding:2px 6px;font-size:11px;margin:0 4px">TON</span> eğlenceli ve merak uyandırıcı.
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span style="background:var(--r);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px">Rol</span>
+      <span style="background:#378ADD;color:#fff;border-radius:4px;padding:3px 8px;font-size:11px">Bağlam</span>
+      <span style="background:#639922;color:#fff;border-radius:4px;padding:3px 8px;font-size:11px">Görev</span>
+      <span style="background:#BA7517;color:#fff;border-radius:4px;padding:3px 8px;font-size:11px">Format</span>
+      <span style="background:#D4537E;color:#fff;border-radius:4px;padding:3px 8px;font-size:11px">Ton</span>
+    </div>
+  </div>
+
+  <div class="sec">Hızlı Prompt Oluşturucu</div>
+  <div style="background:var(--wh);border:0.5px solid var(--gb);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div><label style="font-size:12px;color:#666;display:block;margin-bottom:4px">Rol</label><select id="pg-rol" style="width:100%;border:1.5px solid var(--gb);border-radius:8px;padding:8px;font-size:13px;color:var(--gd)"><option>Hikaye yazarı</option><option>Müzisyen</option><option>Bilim insanı</option><option>Dedektif</option><option>Kaşif</option></select></div>
+      <div><label style="font-size:12px;color:#666;display:block;margin-bottom:4px">Ton</label><select id="pg-ton" style="width:100%;border:1.5px solid var(--gb);border-radius:8px;padding:8px;font-size:13px;color:var(--gd)"><option>Komik</option><option>Ciddi</option><option>Şiirsel</option><option>Gerilimli</option><option>Nostaljik</option></select></div>
+      <div><label style="font-size:12px;color:#666;display:block;margin-bottom:4px">Konu</label><input id="pg-konu" type="text" placeholder="örn: konuşan robot" style="width:100%;border:1.5px solid var(--gb);border-radius:8px;padding:8px;font-size:13px;color:var(--gd)"></div>
+      <div><label style="font-size:12px;color:#666;display:block;margin-bottom:4px">Format</label><select id="pg-format" style="width:100%;border:1.5px solid var(--gb);border-radius:8px;padding:8px;font-size:13px;color:var(--gd)"><option>kısa hikaye</option><option>diyalog</option><option>şiir</option><option>günlük girişi</option><option>haber metni</option></select></div>
+    </div>
+    <button class="sbtn" style="width:100%" onclick="genPrompt()">Prompt Oluştur</button>
+    <div id="pg-result" style="display:none;margin-top:12px;background:var(--rl);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--rd);line-height:1.6"></div>
   </div>
 </div>
 
 <script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
-    document.querySelectorAll('.nav-links button').forEach((b,i) => {
-      b.classList.toggle('active', ['home','activity','quiz','examples'][i] === id);
-    });
-    if(id==='quiz') initQuiz();
-  }
-
-  function selectTheme(el, text) {
-    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    const box = document.getElementById('selected-theme');
-    box.style.display = 'block';
-    box.textContent = 'Seçilen tema: ' + text;
-  }
-
-  let timerInterval = null, timerSeconds = 420, timerRunning = false;
-  function setTimer(s) { clearInterval(timerInterval); timerRunning=false; timerSeconds=s; updateTimerDisplay(); document.getElementById('start-btn').textContent='Başlat'; }
-  function updateTimerDisplay() {
-    const m = Math.floor(timerSeconds/60), s = timerSeconds%60;
-    document.getElementById('timer-display').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  }
-  function toggleTimer() {
-    if(timerRunning) { clearInterval(timerInterval); timerRunning=false; document.getElementById('start-btn').textContent='Devam'; }
-    else { timerRunning=true; document.getElementById('start-btn').textContent='Durdur';
-      timerInterval = setInterval(()=>{ if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}else{clearInterval(timerInterval);timerRunning=false;document.getElementById('start-btn').textContent='Başlat';document.getElementById('timer-display').textContent='Bitti!';} },1000); }
-  }
-  updateTimerDisplay();
-
-  function updateChar() {
-    const t = document.getElementById('prompt-text').value;
-    document.getElementById('char-count').textContent = t.length;
-  }
-  function submitPrompt() {
-    const t = document.getElementById('prompt-text').value.trim();
-    if(!t){ alert('Lütfen bir prompt yaz!'); return; }
-    alert('Prompt gönderildi! Şimdi oylama kısmından puanlamayı yapabilirsiniz.');
-  }
-
-  const scoreData = {};
-  ['t1','t2','t3'].forEach(team => {
-    ['funny','creative','clear'].forEach(cat => {
-      const container = document.getElementById('stars-'+team+'-'+cat);
-      scoreData[team+'-'+cat] = 0;
-      for(let i=1;i<=5;i++){
-        const btn = document.createElement('button');
-        btn.className='star'; btn.textContent='★'; btn.dataset.val=i;
-        btn.onclick = () => {
-          scoreData[team+'-'+cat]=i;
-          container.querySelectorAll('.star').forEach((s,idx)=>s.classList.toggle('on',idx<i));
-          let total=0;
-          ['funny','creative','clear'].forEach(c=>total+=scoreData[team+'-'+c]||0);
-          document.getElementById('total-'+team).textContent=total;
-        };
-        container.appendChild(btn);
-      }
-    });
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nb').forEach((b,i)=>{
+    b.classList.toggle('active',['home','activity','quiz','examples','tips'][i]===id);
   });
+  if(id==='quiz')initQuiz();
+}
 
-  const improvPrompts = [
-    "Kütüphanede sesini kaybeden bir kitap rafı düşün — seslerin kokusu ne olurdu?",
-    "Sabah kahvesinin buharu bir portal açıyor; giren kişi hangi sesi duyar?",
-    "Yıldızları sayan bir merdiven her basamakta farklı bir tat bırakıyor.",
-    "Müzik notaları renk alırsa mavi bir sol ile kırmızı bir mi arasındaki kavgayı anlat.",
-    "Yağmurun dokunuşuyla konuşan bir bank, gece boyu ne anlatırdı?",
-  ];
-  let improvTimerInt = null;
-  function generateImprov() {
-    clearInterval(improvTimerInt);
-    document.getElementById('improv-countdown').style.display='none';
-    document.getElementById('improv-prompt').textContent = improvPrompts[Math.floor(Math.random()*improvPrompts.length)];
-  }
-  function startImprovTimer() {
-    clearInterval(improvTimerInt);
-    let sec=30;
-    const cd = document.getElementById('improv-countdown');
-    cd.style.display='block'; cd.textContent=30;
-    improvTimerInt = setInterval(()=>{ sec--; cd.textContent=sec; if(sec<=0){clearInterval(improvTimerInt);cd.textContent='Süre Doldu!';} },1000);
-  }
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+function closeModal(){document.getElementById('submit-modal').classList.remove('open')}
 
-  const quizQuestions = [
-    { q:"İyi bir prompt'ta aşağıdakilerden hangisi EN ÖNEMLİ unsurdur?", opts:["Mümkün olduğunca kısa tutmak","Bağlamı ve amacı net belirtmek","Sadece soru işareti kullanmak","Teknik terimler eklemek"], ans:1, exp:"İyi bir prompt, amacı ve bağlamı net ortaya koyar. Yapay zeka doğru yönlendirme olmadan cevabı tahmin etmek zorunda kalır." },
-    { q:"Aşağıdaki prompt'lardan hangisi daha etkilidir?", opts:["Hikaye yaz","Küçük bir çocuk için, uykuya dayanmaya çalışan cesur bir kirpi hakkında kısa ve komik bir hikaye yaz","Bir şeyler anlat","İyi bir metin üret"], ans:1, exp:"Hedef kitle, ton, uzunluk ve konu belirlenmiş prompt çok daha tutarlı sonuçlar verir." },
-    { q:"Prompt'ta 'duyu' kelimelerine yer vermek ne işe yarar?", opts:["Yapay zekanın daha hızlı yanıt vermesini sağlar","Metni daha uzun yapar","Anlatıyı canlı ve sürükleyici hale getirir","Sadece edebî metinlerde gereklidir"], ans:2, exp:"Görsel, işitsel, dokunsal unsurlar okuyucuyu metne çeker ve yapay zekanın zengin, detaylı içerik üretmesine yol açar." },
-    { q:"'Sürpriz öge' bir prompt'a katıldığında ne olur?", opts:["Yapay zeka kafa karışıklığı yaşar","Yaratıcılık ve özgünlük artar","Prompt geçersiz hale gelir","Cevap daha kısa olur"], ans:1, exp:"Beklenmedik unsurlar yapay zekanın kalıpların dışına çıkmasını teşvik eder ve daha özgün çıktılar üretir." },
-    { q:"Aşağıdakilerden hangisi bir prompt yazım stratejisi DEĞİLDİR?", opts:["Rol vermek ('Sen bir müzisyensin...')","Örneklerle açıklamak","Yazı tipi boyutunu belirtmek","Format istemek ('madde madde yaz')"], ans:2, exp:"Yazı tipi gibi görsel biçimlendirme talimatları metin tabanlı yapay zeka çıktısını etkilemez. Diğerleri etkili stratejilerdir." },
-    { q:"Bir prompt en fazla 2 cümle olursa bu durumda ne önerilir?", opts:["Daha fazla prompt göndermek","Her cümlenin yoğun ve spesifik olmasını sağlamak","Sadece soru sormak","Prompt'u tamamen kısaltmak"], ans:1, exp:"Sınırlı uzunluklarda her cümle maksimum bilgi taşımalıdır: hedef kitle, ton, bağlam ve format." },
-  ];
-  let qIndex=0, qScore=0, qAnswered=false;
-  function initQuiz(){ qIndex=0; qScore=0; renderQuestion(); }
-  function renderQuestion(){
-    const c = document.getElementById('quiz-container');
-    if(qIndex>=quizQuestions.length){ c.innerHTML=`<div class="quiz-result"><div class="big">${qScore}/${quizQuestions.length}</div><p>${qScore>=5?'Harika! Prompt ustasısın!':qScore>=3?'İyi gidiyorsun, biraz daha pratik yap!':'Tekrar dene, her seferinde daha iyi olacaksın!'}</p><button class="quiz-restart" onclick="initQuiz()">Tekrar Oyna</button></div>`; return; }
-    qAnswered=false;
-    const q = quizQuestions[qIndex];
-    c.innerHTML=`<div class="quiz-progress">Soru ${qIndex+1} / ${quizQuestions.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i})">${o}</button>`).join('')}</div><div id="quiz-fb"></div>`;
+const themes=[
+  {text:'Zaman yolculuğu ama kahvaltı masasında',em:'&#x23F0;'},
+  {text:'Bir penguenin gizli ajan olması',em:'&#x1F427;'},
+  {text:'Pizza yiyen bir robotun felsefe yapması',em:'&#x1F355;'},
+  {text:'Uyuyamayan bir ayın dünyaya mektubu',em:'&#x1F319;'},
+  {text:'Bir palyaçonun çok ciddi bir iş görüşmesi',em:'&#x1F3AD;'}
+];
+
+function selTheme(el,text,em){
+  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const r=document.getElementById('theme-reveal');
+  r.style.display='block';
+  document.getElementById('reveal-em').innerHTML=em;
+  document.getElementById('reveal-name').textContent=text;
+  showToast('Tema seçildi: '+text.substring(0,28)+'...');
+}
+function randTheme(){
+  const t=themes[Math.floor(Math.random()*themes.length)];
+  const cards=document.querySelectorAll('.tc');
+  const idx=themes.findIndex(x=>x.text===t.text);
+  selTheme(cards[idx],t.text,t.em);
+}
+
+let tSec=420,tRun=false,tInt=null;
+function setT(s){clearInterval(tInt);tRun=false;tSec=s;updTDisp();document.getElementById('tstart').textContent='Başlat'}
+function updTDisp(){
+  const m=Math.floor(tSec/60),s=tSec%60;
+  document.getElementById('tdisp').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function toggleT(){
+  if(tRun){clearInterval(tInt);tRun=false;document.getElementById('tstart').textContent='Devam';}
+  else{tRun=true;document.getElementById('tstart').textContent='Durdur';
+    tInt=setInterval(()=>{if(tSec>0){tSec--;updTDisp();}else{clearInterval(tInt);tRun=false;document.getElementById('tstart').textContent='Başlat';document.getElementById('tdisp').textContent='Bitti!';showToast('Süre doldu!');}},1000);
   }
-  function answerQuiz(i){
-    if(qAnswered)return; qAnswered=true;
-    const q=quizQuestions[qIndex];
-    const opts=document.querySelectorAll('.quiz-opt');
-    opts.forEach((o,idx)=>{ o.classList.add('disabled'); if(idx===q.ans)o.classList.add('correct'); else if(idx===i&&i!==q.ans)o.classList.add('wrong'); });
-    const fb=document.getElementById('quiz-fb');
-    if(i===q.ans){ qScore++; fb.innerHTML=`<div class="quiz-feedback ok">Doğru! ${q.exp}</div>`; }
-    else { fb.innerHTML=`<div class="quiz-feedback fail">Yanlış. ${q.exp}</div>`; }
-    fb.innerHTML+=`<button class="quiz-next" onclick="nextQ()">${qIndex+1<quizQuestions.length?'Sonraki Soru':'Sonucu Gör'}</button>`;
+}
+updTDisp();
+
+function updChar(){document.getElementById('ccount').textContent=document.getElementById('ptext').value.length;}
+function submitP(){
+  const t=document.getElementById('ptext').value.trim();
+  if(!t){showToast('Lütfen bir şeyler yaz!');return;}
+  const senses=['parlayan','loş','fısıltı','tiz','çatırtı','koku','dokunuş','ıslak','soğuk','tuzlu','ekşi','metalik','tatlı','acı','kıpıl','parıltı','mantar','lavanta','homurtu','yankı'];
+  let sc=senses.filter(s=>t.toLowerCase().includes(s)).length;
+  const msg=sc>=3?'Harika! '+sc+' duyu kelimesi tespit edildi. Oylama bölümüne geçebilirsiniz.':'Not: '+sc+' duyu kelimesi bulundu, en az 3 olması önerilir.';
+  document.getElementById('modal-msg').textContent=msg;
+  document.getElementById('submit-modal').classList.add('open');
+}
+
+const teams=['Takım 1','Takım 2','Takım 3','Takım 4'];
+const cats=['funny','creative','clear'];
+const catLabels={funny:'Komiklik',creative:'Yaratıcılık',clear:'Akıcılık'};
+const scores={};
+teams.forEach(t=>{cats.forEach(c=>{scores[t+'-'+c]=0;});});
+
+function buildScoring(){
+  const ss=document.getElementById('scoreSection');
+  ss.innerHTML='';
+  teams.forEach(team=>{
+    const row=document.createElement('div');
+    row.className='score-row';
+    row.innerHTML=`<div class="tbadge">${team}</div>`;
+    cats.forEach(cat=>{
+      const lbl=document.createElement('div');lbl.className='clbl';lbl.textContent=catLabels[cat];
+      const sd=document.createElement('div');sd.className='stars';sd.id='s-'+team+'-'+cat;
+      for(let i=1;i<=5;i++){
+        const b=document.createElement('button');b.className='star';b.textContent='★';b.dataset.v=i;
+        b.onclick=()=>{scores[team+'-'+cat]=i;sd.querySelectorAll('.star').forEach((s,idx)=>s.classList.toggle('on',idx<i));updLB();};
+        sd.appendChild(b);
+      }
+      row.appendChild(lbl);row.appendChild(sd);
+    });
+    const tot=document.createElement('div');tot.className='stotal';tot.id='tot-'+team;tot.textContent='0';
+    row.appendChild(tot);
+    ss.appendChild(row);
+  });
+}
+function updLB(){
+  const lbEl=document.getElementById('lb');
+  const teamScores=teams.map(t=>{
+    let s=cats.reduce((a,c)=>a+(scores[t+'-'+c]||0),0);
+    document.getElementById('tot-'+t).textContent=s;
+    return{name:t,score:s};
+  }).sort((a,b)=>b.score-a.score);
+  const max=Math.max(...teamScores.map(t=>t.score),1);
+  lbEl.innerHTML='';
+  teamScores.forEach((t,i)=>{
+    const row=document.createElement('div');
+    row.className='lb-row'+(i===0&&t.score>0?' first':'');
+    const rankSymbol=i===0&&t.score>0?'1':String(i+1);
+    row.innerHTML=`<div class="lb-rank">${rankSymbol}</div><div class="lb-name">${t.name}</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round(t.score/max*100)}%"></div></div><div class="lb-score">${t.score}</div>`;
+    lbEl.appendChild(row);
+  });
+}
+buildScoring();updLB();
+
+const improvPs=[
+  'Kütüphanede sesini kaybeden bir kitap rafı — seslerin kokusu ne olurdu?',
+  'Sabah kahvesinin buharu bir portal açıyor; giren kişi hangi sesi duyar?',
+  'Yıldızları sayan bir merdiven her basamakta farklı bir tat bırakıyor.',
+  'Müzik notaları renk alırsa mavi bir sol ile kırmızı bir mi arasındaki kavgayı anlat.',
+  'Yağmurun dokunuşuyla konuşan bir bank, gece boyu ne anlatırdı?',
+  'Zamanı dondurabilseydin hangi sesi sonsuza kadar saklamak isterdin?',
+  'Bir rengin kokusu olsaydı, kırmızı ne kokardı?',
+];
+let improvTInt=null;
+function genImprov(){
+  clearInterval(improvTInt);
+  document.getElementById('improv-cd').style.display='none';
+  document.getElementById('improv-prompt').textContent=improvPs[Math.floor(Math.random()*improvPs.length)];
+}
+function startImprovT(){
+  clearInterval(improvTInt);let sec=30;
+  const cd=document.getElementById('improv-cd');cd.style.display='block';cd.textContent=30;
+  improvTInt=setInterval(()=>{sec--;cd.textContent=sec;if(sec<=0){clearInterval(improvTInt);cd.textContent='Bitti!';showToast('30 saniye doldu!');}},1000);
+}
+
+const quizQs=[
+  {q:'İyi bir prompt\'ta EN ÖNEMLİ unsur hangisidir?',opts:['Mümkün olduğunca kısa tutmak','Bağlamı ve amacı net belirtmek','Sadece soru işareti kullanmak','Teknik terimler eklemek'],ans:1,exp:'İyi bir prompt, amacı ve bağlamı net ortaya koyar. Net yön vermezsen yapay zeka tahmin etmek zorunda kalır.'},
+  {q:'Hangi prompt daha etkilidir?',opts:['Hikaye yaz','Küçük bir çocuk için cesur bir kirpi hakkında komik ve kısa bir hikaye yaz','Bir şeyler anlat','Güzel bir metin üret'],ans:1,exp:'Hedef kitle, ton, uzunluk ve konu belirlenmiş prompt tutarlı sonuç verir.'},
+  {q:'Prompt\'ta duyu kelimelerine yer vermek ne işe yarar?',opts:['Yapay zeka daha hızlı yanıt verir','Metni uzatır','Anlatıyı canlı ve sürükleyici kılar','Sadece edebî metinlerde gereklidir'],ans:2,exp:'Görsel, işitsel, dokunsal unsurlar yapay zekanın zengin içerik üretmesini sağlar.'},
+  {q:'Sürpriz öge bir prompt\'a katıldığında ne olur?',opts:['Yapay zeka kafa karışıklığı yaşar','Yaratıcılık ve özgünlük artar','Prompt geçersiz olur','Cevap kısalır'],ans:1,exp:'Beklenmedik unsurlar yapay zekanın kalıpların dışına çıkmasını teşvik eder.'},
+  {q:'Aşağıdakilerden hangisi etkili bir prompt stratejisi DEĞİLDİR?',opts:['Rol vermek','Örneklerle açıklamak','Yazı tipi boyutunu belirtmek','Format istemek'],ans:2,exp:'Yazı tipi gibi görsel biçimlendirme metin tabanlı yapay zekayı etkilemez.'},
+  {q:'Prompt en fazla 2 cümle olursa ne yapılmalıdır?',opts:['Daha fazla prompt gönder','Her cümleyi yoğun ve spesifik tut','Sadece soru sor','Prompt\'u kısalt'],ans:1,exp:'Sınırlı uzunluklarda her cümle: hedef, ton, bağlam ve format taşımalıdır.'},
+  {q:'Yapay zekaya rol vermenin avantajı nedir?',opts:['Yanıt hızlanır','Bakış açısı ve üslup değişir','Prompt daha kısa olur','Hiçbir avantajı yoktur'],ans:1,exp:'"Sen bir mühendissin..." gibi roller çıktının tonunu ve içeriğini köklü biçimde değiştirir.'},
+  {q:'"Madde madde yaz" isteği ne tür bir prompt stratejisidir?',opts:['Ton belirleme','Format belirleme','Rol atama','Bağlam verme'],ans:1,exp:'Format belirleme, çıktının nasıl yapılandırılacağını söyler ve okunabilirliği artırır.'},
+  {q:'Uzun ve karmaşık bir prompt yazmak her zaman daha iyi sonuç verir mi?',opts:['Evet, ne kadar uzun o kadar iyi','Hayır, gereksiz bilgi çıktıyı bozabilir','Uzunluğun önemi yoktur','Sadece İngilizce promptlarda önemlidir'],ans:1,exp:'Gereksiz detay yapay zekanın odaklanmasını zorlaştırır. Sade ve net olan kazanır.'},
+  {q:'Bir prompt\'u geliştirmenin en iyi yolu nedir?',opts:['İlk denemede mükemmel yazmaya çalışmak','Test edip küçük değişikliklerle iyileştirmek','Çok uzun tutmak','Hiç değiştirmemek'],ans:1,exp:'Prompt mühendisliği iteratif bir süreçtir. Dene, gözlemle, düzelt.'},
+];
+
+let qIdx=0,qScr=0,qWrong=0,qAns=false;
+function initQuiz(){qIdx=0;qScr=0;qWrong=0;renderQ();}
+function renderQ(){
+  const c=document.getElementById('qcard');
+  document.getElementById('quiz-score-badge').textContent=qScr+' / '+quizQs.length;
+  if(qIdx>=quizQs.length){
+    const pct=Math.round(qScr/quizQs.length*100);
+    const medal=pct>=90?'&#x1F947;':pct>=60?'&#x1F948;':'&#x1F949;';
+    const msg=pct>=90?'Mükemmel! Sen gerçek bir Prompt Ustasısın!':pct>=60?'İyi iş! Biraz daha pratik yap.':'Devam et, her seferinde daha iyi olacaksın!';
+    c.innerHTML=`<div class="qresult"><div class="medal">${medal}</div><div class="big">${qScr}/${quizQs.length}</div><p>${msg}</p><div class="qscore-strip"><div class="qsc"><div class="qsc-n">${pct}%</div><div class="qsc-l">Başarı</div></div><div class="qsc"><div class="qsc-n">${qScr}</div><div class="qsc-l">Doğru</div></div><div class="qsc"><div class="qsc-n">${qWrong}</div><div class="qsc-l">Yanlış</div></div></div><button class="qrestart" onclick="initQuiz()">Tekrar Oyna</button></div>`;
+    return;
   }
-  function nextQ(){ qIndex++; renderQuestion(); }
-  initQuiz();
+  qAns=false;
+  const q=quizQs[qIdx];
+  const prog=Math.round(qIdx/quizQs.length*100);
+  c.innerHTML=`<div class="qprog-wrap"><div class="qprog-bar" style="width:${prog}%"></div></div><div class="qmeta"><span>Soru ${qIdx+1} / ${quizQs.length}</span><span>${qScr} puan</span></div><div class="qq">${q.q}</div><div class="qopts">${q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('')}</div><div id="qfb"></div>`;
+}
+function ansQ(i){
+  if(qAns)return;qAns=true;
+  const q=quizQs[qIdx];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{o.classList.add('disabled');if(idx===q.ans)o.classList.add('correct');else if(idx===i&&i!==q.ans)o.classList.add('wrong');});
+  const fb=document.getElementById('qfb');
+  if(i===q.ans){qScr++;fb.innerHTML=`<div class="qfb ok">Dogru! ${q.exp}</div>`;}
+  else{qWrong++;fb.innerHTML=`<div class="qfb fail">Yanlis. ${q.exp}</div>`;}
+  document.getElementById('quiz-score-badge').textContent=qScr+' / '+quizQs.length;
+  fb.innerHTML+=`<button class="qnext" onclick="nextQ()">${qIdx+1<quizQs.length?'Sonraki Soru':'Sonucu Gör'}</button>`;
+}
+function nextQ(){qIdx++;renderQ();}
+initQuiz();
+
+function copyText(btn,txt){
+  const ta=document.getElementById('ptext');
+  if(ta){ta.value=txt;updChar();showPage('activity');showToast('Prompt yazma alanına kopyalandı!');}
+  else{navigator.clipboard&&navigator.clipboard.writeText(txt);showToast('Kopyalandı!');}
+}
+function insertSense(el){
+  const ta=document.getElementById('ptext');
+  if(ta){const v=ta.value;const pos=ta.selectionStart||v.length;ta.value=v.slice(0,pos)+(v.length&&v[pos-1]!==' '?' ':'')+el.textContent+' '+v.slice(pos);updChar();}
+  showToast('"'+el.textContent+'" eklendi! Etkinlik sayfasına geç.');
+}
+
+function genPrompt(){
+  const rol=document.getElementById('pg-rol').value;
+  const ton=document.getElementById('pg-ton').value;
+  const konu=document.getElementById('pg-konu').value||'gizemli bir nesne';
+  const fmt=document.getElementById('pg-format').value;
+  const r=document.getElementById('pg-result');
+  r.style.display='block';
+  r.textContent=`Sen deneyimli bir ${rol}sın. ${ton} bir üslupla, ${konu} hakkında ${fmt} biçiminde yaz. Okuyucunun merakını ilk cümlede yakala ve sonunda beklenmedik bir dönüş ekle.`;
+  showToast('Prompt oluşturuldu!');
+}
 </script>
