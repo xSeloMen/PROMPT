@@ -1,0 +1,435 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans, system-ui, sans-serif); }
+  :root {
+    --red: #E24B4A; --red-dark: #A32D2D; --red-light: #FCEBEB; --red-mid: #F7C1C1;
+    --white: #fff; --gray-light: #f8f8f8; --gray-text: #555; --gray-dark: #222;
+  }
+  body { background: transparent; }
+
+  /* NAV */
+  .nav { background: var(--red); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { color: #fff; font-size: 22px; font-weight: 500; letter-spacing: 1px; }
+  .nav-logo span { font-size: 12px; font-weight: 400; opacity: 0.85; margin-left: 6px; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links button { background: transparent; border: none; color: rgba(255,255,255,0.85); font-size: 13px; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+  .nav-links button:hover, .nav-links button.active { background: rgba(255,255,255,0.18); color: #fff; }
+
+  /* PAGES */
+  .page { display: none; padding: 2rem 1.5rem; max-width: 860px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero { background: var(--red); border-radius: 16px; padding: 2.5rem 2rem; margin-bottom: 2rem; text-align: center; }
+  .hero h1 { color: #fff; font-size: 28px; font-weight: 500; margin-bottom: 8px; }
+  .hero p { color: rgba(255,255,255,0.88); font-size: 15px; line-height: 1.6; max-width: 540px; margin: 0 auto 1.5rem; }
+  .hero-btn { background: #fff; color: var(--red-dark); border: none; padding: 10px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+  .hero-btn:hover { opacity: 0.9; }
+
+  /* CARDS GRID */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 2rem; }
+  .card { background: var(--white); border: 0.5px solid #eee; border-radius: 12px; padding: 1.25rem; }
+  .card-icon { font-size: 24px; margin-bottom: 10px; }
+  .card h3 { font-size: 14px; font-weight: 500; color: var(--gray-dark); margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--gray-text); line-height: 1.6; }
+  .card-accent { border-top: 3px solid var(--red); }
+
+  /* SECTION TITLE */
+  .sec-title { font-size: 18px; font-weight: 500; color: var(--gray-dark); margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 2px solid var(--red-mid); }
+
+  /* RULES */
+  .rules-box { background: var(--red-light); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--red); }
+  .rules-box h3 { font-size: 14px; font-weight: 500; color: var(--red-dark); margin-bottom: 10px; }
+  .rule-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; color: #444; line-height: 1.55; }
+  .rule-num { background: var(--red); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+
+  /* THEMES */
+  .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .theme-card { background: #fff; border: 1.5px solid #eee; border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s, transform 0.1s; text-align: center; }
+  .theme-card:hover { border-color: var(--red); transform: translateY(-2px); }
+  .theme-card.selected { border-color: var(--red); background: var(--red-light); }
+  .theme-card .emoji { font-size: 22px; margin-bottom: 6px; }
+  .theme-card p { font-size: 12px; color: #444; line-height: 1.5; }
+
+  /* TIMER */
+  .timer-box { background: var(--red); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .timer-display { color: #fff; font-size: 32px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .timer-label { color: rgba(255,255,255,0.8); font-size: 12px; }
+  .timer-controls { display: flex; gap: 8px; }
+  .timer-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: background 0.15s; }
+  .timer-btn:hover { background: rgba(255,255,255,0.35); }
+
+  /* PROMPT AREA */
+  .prompt-area textarea { width: 100%; border: 1.5px solid #ddd; border-radius: 10px; padding: 12px; font-size: 14px; line-height: 1.6; resize: vertical; min-height: 90px; color: var(--gray-dark); font-family: inherit; transition: border-color 0.15s; }
+  .prompt-area textarea:focus { outline: none; border-color: var(--red); }
+  .prompt-area label { font-size: 13px; color: #666; display: block; margin-bottom: 6px; }
+  .char-count { font-size: 12px; color: #999; text-align: right; margin-top: 4px; }
+  .submit-btn { background: var(--red); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; transition: opacity 0.15s; }
+  .submit-btn:hover { opacity: 0.88; }
+
+  /* SCORES */
+  .score-row { display: flex; align-items: center; gap: 12px; padding: 12px; background: #fff; border: 0.5px solid #eee; border-radius: 10px; margin-bottom: 8px; }
+  .team-badge { background: var(--red); color: #fff; border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: 500; min-width: 70px; text-align: center; }
+  .stars { display: flex; gap: 4px; }
+  .star { width: 22px; height: 22px; background: #eee; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: background 0.1s; display: flex; align-items: center; justify-content: center; }
+  .star.on { background: #FFC107; }
+  .score-total { margin-left: auto; font-size: 16px; font-weight: 500; color: var(--red-dark); min-width: 32px; text-align: right; }
+
+  /* QUIZ */
+  .quiz-card { background: #fff; border: 0.5px solid #eee; border-radius: 14px; padding: 1.5rem; }
+  .quiz-q { font-size: 15px; font-weight: 500; color: var(--gray-dark); margin-bottom: 1rem; line-height: 1.5; }
+  .quiz-progress { font-size: 12px; color: #999; margin-bottom: 1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt { background: var(--gray-light); border: 1.5px solid #eee; border-radius: 8px; padding: 10px 14px; font-size: 13px; cursor: pointer; text-align: left; transition: all 0.15s; color: var(--gray-dark); }
+  .quiz-opt:hover { border-color: var(--red); background: var(--red-light); }
+  .quiz-opt.correct { background: #eafaea; border-color: #4CAF50; color: #2e7d32; }
+  .quiz-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
+  .quiz-opt.disabled { cursor: default; }
+  .quiz-feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.5; }
+  .quiz-feedback.ok { background: #eafaea; color: #2e7d32; }
+  .quiz-feedback.fail { background: var(--red-light); color: var(--red-dark); }
+  .quiz-next { background: var(--red); color: #fff; border: none; padding: 9px 22px; border-radius: 8px; font-size: 13px; cursor: pointer; margin-top: 12px; }
+  .quiz-result { text-align: center; padding: 2rem 1rem; }
+  .quiz-result .big { font-size: 48px; font-weight: 500; color: var(--red); }
+  .quiz-result p { color: #555; font-size: 14px; margin-top: 8px; }
+  .quiz-restart { background: var(--red); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; margin-top: 16px; }
+
+  /* EXAMPLES */
+  .example-card { background: #fff; border: 0.5px solid #eee; border-radius: 12px; padding: 1.25rem; margin-bottom: 12px; border-left: 4px solid var(--red); }
+  .example-card .tag { display: inline-block; background: var(--red-light); color: var(--red-dark); border-radius: 20px; font-size: 11px; padding: 3px 10px; margin-bottom: 8px; }
+  .example-card p { font-size: 13px; color: #444; line-height: 1.65; }
+  .example-card .theme-label { font-size: 12px; font-weight: 500; color: var(--red-dark); margin-bottom: 4px; }
+
+  /* BADGE */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+  .badge { background: var(--red-light); border: 1px solid var(--red-mid); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--red-dark); display: flex; align-items: center; gap: 6px; }
+
+  /* IMPROV */
+  .improv-box { background: #fff; border: 2px dashed var(--red-mid); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+  .improv-box h3 { font-size: 16px; font-weight: 500; color: var(--red-dark); margin-bottom: 6px; }
+  .improv-box p { font-size: 14px; color: #555; margin-bottom: 1rem; line-height: 1.6; }
+  .improv-prompt { background: var(--red-light); border-radius: 10px; padding: 12px 16px; font-size: 14px; color: var(--red-dark); font-weight: 500; margin-bottom: 1rem; min-height: 40px; }
+  .gen-btn { background: var(--red); color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .countdown { font-size: 40px; font-weight: 500; color: var(--red); margin: 6px 0; }
+</style>
+
+<div class="nav">
+  <div class="nav-logo">GENÇTEK <span>Prompt Master</span></div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home')">Ana Sayfa</button>
+    <button onclick="showPage('activity')">Etkinlik</button>
+    <button onclick="showPage('quiz')">Quiz</button>
+    <button onclick="showPage('examples')">Örnekler</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <h1>Prompt Master: Hayal Gücü Yarışması</h1>
+    <p>Gençtek etkinliğine hoş geldin! Takımını kur, temani seç ve en yaratıcı, komik ya da etkileyici prompt'u yaz.</p>
+    <button class="hero-btn" onclick="showPage('activity')">Etkinliği Başlat</button>
+  </div>
+  <div class="cards">
+    <div class="card card-accent">
+      <div class="card-icon">&#x1F4CB;</div>
+      <h3>Etkinlik Planı</h3>
+      <p>Adım adım rehber, yazma kuralları ve tema kartları seni bekliyor.</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-icon">&#x23F1;</div>
+      <h3>Geri Sayım Sayacı</h3>
+      <p>7 dakikalık yazma ve 30 saniyelik doğaçlama süreleri için yerleşik zamanlayıcı.</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-icon">&#x2B50;</div>
+      <h3>Puanlama Sistemi</h3>
+      <p>Komiklik, yaratıcılık ve akıcılık kriterlerine göre takım bazlı puanlama.</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-icon">&#x1F4A1;</div>
+      <h3>Prompt Quiz</h3>
+      <p>Yapay zeka prompt yazımı hakkında eğlenceli sorularla kendini test et.</p>
+    </div>
+  </div>
+  <p class="sec-title">Etkinlik Aşamaları</p>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:2rem;">
+    <div class="score-row">
+      <div class="team-badge" style="background:#E24B4A;">Hazırlık</div>
+      <div style="font-size:13px;color:#444;">Takımları oluşturun, prompt kartlarını dağıtın <span style="color:#999;font-size:12px;">– 5 dk</span></div>
+    </div>
+    <div class="score-row">
+      <div class="team-badge" style="background:#c9403f;">Kurallar</div>
+      <div style="font-size:13px;color:#444;">Yazma kurallarını okuyun ve benimseyin <span style="color:#999;font-size:12px;">– 2 dk</span></div>
+    </div>
+    <div class="score-row">
+      <div class="team-badge" style="background:#b03838;">Yazma</div>
+      <div style="font-size:13px;color:#444;">Prompt'ları yazın, sayaç başlıyor! <span style="color:#999;font-size:12px;">– 7 dk</span></div>
+    </div>
+    <div class="score-row">
+      <div class="team-badge" style="background:#993333;">Sunum</div>
+      <div style="font-size:13px;color:#444;">Prompt'ları sesli okuyun, puanlayın <span style="color:#999;font-size:12px;">– 10 dk</span></div>
+    </div>
+    <div class="score-row">
+      <div class="team-badge" style="background:#7d2828;">Doğaçlama</div>
+      <div style="font-size:13px;color:#444;">30 saniyede cümle başlangıcı yazın <span style="color:#999;font-size:12px;">– 5 dk</span></div>
+    </div>
+  </div>
+  <div class="badge-row">
+    <div class="badge">&#x1F3C6; En Yaratıcı: Dijital Kahve Fincanı</div>
+    <div class="badge">&#x1F602; En Komik: Güldürme Uzmanı</div>
+    <div class="badge">&#x270D; En Hızlı: Hızlı Kalem</div>
+  </div>
+</div>
+
+<!-- ACTIVITY -->
+<div class="page" id="page-activity">
+  <p class="sec-title">Yazma Kuralları</p>
+  <div class="rules-box">
+    <h3>Prompt yazarken şu 3 kurala uy:</h3>
+    <div class="rule-item"><div class="rule-num">1</div><div>Prompt <strong>en fazla 2 cümle</strong> olmalı.</div></div>
+    <div class="rule-item"><div class="rule-num">2</div><div>İçinde <strong>en az 3 duyu</strong> (görme, işitme, koklama, dokunma, tatma) ile ilgili kelime bulunmalı.</div></div>
+    <div class="rule-item"><div class="rule-num">3</div><div>Bir <strong>sürpriz öge</strong> eklenmeli: zaman makinesi, konuşan hayvan, sihirli nesne vb.</div></div>
+  </div>
+
+  <p class="sec-title">Tema Seç</p>
+  <div class="themes-grid" id="themes-grid">
+    <div class="theme-card" onclick="selectTheme(this,'Zaman yolculuğu ama kahvaltı masasında')"><div class="emoji">&#x23F0;</div><p>Zaman yolculuğu ama kahvaltı masasında</p></div>
+    <div class="theme-card" onclick="selectTheme(this,'Bir penguenin gizli ajan olması')"><div class="emoji">&#x1F427;</div><p>Bir penguenin gizli ajan olması</p></div>
+    <div class="theme-card" onclick="selectTheme(this,'Pizza yiyen bir robotun felsefe yapması')"><div class="emoji">&#x1F355;</div><p>Pizza yiyen bir robotun felsefe yapması</p></div>
+    <div class="theme-card" onclick="selectTheme(this,'Uyuyamayan bir ayın dünyaya mektubu')"><div class="emoji">&#x1F319;</div><p>Uyuyamayan bir ayın dünyaya mektubu</p></div>
+    <div class="theme-card" onclick="selectTheme(this,'Bir palyaçonun çok ciddi bir iş görüşmesi')"><div class="emoji">&#x1F3AD;</div><p>Bir palyaçonun çok ciddi bir iş görüşmesi</p></div>
+  </div>
+  <div id="selected-theme" style="display:none;background:var(--red-light);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red-dark);margin-bottom:1.5rem;font-weight:500;"></div>
+
+  <p class="sec-title">Sayaç</p>
+  <div class="timer-box">
+    <div>
+      <div class="timer-label">Kalan Süre</div>
+      <div class="timer-display" id="timer-display">07:00</div>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn" onclick="setTimer(420)">7 dk</button>
+      <button class="timer-btn" onclick="setTimer(30)">30 sn</button>
+      <button class="timer-btn" id="start-btn" onclick="toggleTimer()">Başlat</button>
+    </div>
+  </div>
+
+  <p class="sec-title">Prompt Yazma Alanı</p>
+  <div class="prompt-area" style="margin-bottom:1.5rem;">
+    <label>Seçtiğin temaya göre prompt'unu yaz:</label>
+    <textarea id="prompt-text" placeholder="Prompt'unu buraya yaz..." maxlength="400" oninput="updateChar()"></textarea>
+    <div class="char-count"><span id="char-count">0</span>/400</div>
+    <button class="submit-btn" onclick="submitPrompt()">Gönder ve Oyla</button>
+  </div>
+
+  <p class="sec-title">Takım Puanları</p>
+  <div id="score-section">
+    <div class="score-row" id="t1">
+      <div class="team-badge">Takım 1</div>
+      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
+      <div class="stars" id="stars-t1-funny"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
+      <div class="stars" id="stars-t1-creative"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
+      <div class="stars" id="stars-t1-clear"></div>
+      <div class="score-total" id="total-t1">0</div>
+    </div>
+    <div class="score-row" id="t2">
+      <div class="team-badge">Takım 2</div>
+      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
+      <div class="stars" id="stars-t2-funny"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
+      <div class="stars" id="stars-t2-creative"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
+      <div class="stars" id="stars-t2-clear"></div>
+      <div class="score-total" id="total-t2">0</div>
+    </div>
+    <div class="score-row" id="t3">
+      <div class="team-badge">Takım 3</div>
+      <div style="font-size:12px;color:#666;margin-right:6px;">Komiklik</div>
+      <div class="stars" id="stars-t3-funny"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Yaratıcılık</div>
+      <div class="stars" id="stars-t3-creative"></div>
+      <div style="font-size:12px;color:#666;margin-left:10px;">Akıcılık</div>
+      <div class="stars" id="stars-t3-clear"></div>
+      <div class="score-total" id="total-t3">0</div>
+    </div>
+  </div>
+
+  <p class="sec-title" style="margin-top:1.5rem;">Bonus: Prompt Doğaçlama</p>
+  <div class="improv-box">
+    <h3>30 Saniye Doğaçlama!</h3>
+    <p>Jüri rastgele bir prompt okur, takımlar 30 saniyede bir cümlelik hikaye başlangıcı yazar.</p>
+    <div class="improv-prompt" id="improv-prompt">Bir prompt oluşturmak için butona bas.</div>
+    <div class="countdown" id="improv-countdown" style="display:none;">30</div>
+    <button class="gen-btn" onclick="generateImprov()">Rastgele Prompt Al</button>
+    <button class="gen-btn" style="background:#fff;color:var(--red);border:1.5px solid var(--red);margin-left:8px;" onclick="startImprovTimer()">Sayacı Başlat</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="page-quiz">
+  <p class="sec-title">Prompt Yazma Quiz'i</p>
+  <div class="quiz-card" id="quiz-container"></div>
+</div>
+
+<!-- EXAMPLES -->
+<div class="page" id="page-examples">
+  <p class="sec-title">İlham Veren Örnek Prompt'lar</p>
+  <div class="example-card">
+    <div class="tag">Örnek</div>
+    <div class="theme-label">Zaman yolculuğu ama kahvaltı masasında</div>
+    <p>Kahvaltıda mısır gevreğinin içinden bir zaman portalı açılıyor ve dinozorlar seninle birlikte kaseyi yemek istiyor. Sütün biteceğini fark eden bir dinozorun gözlerindeki paniği anlat.</p>
+  </div>
+  <div class="example-card">
+    <div class="tag">Örnek</div>
+    <div class="theme-label">Konuşan bir çorap</div>
+    <p>Çorabının teki kaybolduğunda diğer çorap aniden konuşmaya başlıyor: "Onu çamaşır makinesine yollama, orası bir boyut kapısı!" Çorabın ses tonu nasıl ve ona ne cevap veriyorsun?</p>
+  </div>
+  <div class="example-card">
+    <div class="tag">Örnek</div>
+    <div class="theme-label">Pizza yiyen bir robotun felsefesi</div>
+    <p>Mantar kokusunu ilk kez algılayan bir robot, varoluşun anlamını pizza dilimlerinde arıyor; sıcak peynirin dokunuşu onu düşündürüyor: "Erime özgürlük müdür yoksa son mu?"</p>
+  </div>
+  <div class="example-card">
+    <div class="tag">Örnek</div>
+    <div class="theme-label">Gizli ajan penguen</div>
+    <p>Buz gibi soğuk bir depo kokusunda minik kanatlarıyla şifreli mesajı taşıyan penguen, tüylerinin arasında gizli kulaklıkla tiz bir sesle "Misyon tamamlandı" diye fısıldıyor.</p>
+  </div>
+  <div class="example-card">
+    <div class="tag">Örnek</div>
+    <div class="theme-label">Palyaçonun iş görüşmesi</div>
+    <p>Kırmızı burunun çıkardığı cıvıltı sesi odayı doldururken palyaço, hissettiği gerginliği gizlemek için lavanta kolonyasını omzuna sıkıyor ve soğuk metal masaya ciddiyet yüklü ıslak ellerini koyuyor.</p>
+  </div>
+  <p class="sec-title" style="margin-top:2rem;">Duyu Kelimeleri Bankası</p>
+  <div class="badge-row">
+    <div class="badge" style="background:#fff;border-color:#E24B4A;">&#x1F441; Parlıyor</div>
+    <div class="badge" style="background:#fff;border-color:#E24B4A;">&#x1F441; Loş</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Fısıltı</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Tiz ses</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F442; Çatırtı</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Lavanta</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Mantar kokusu</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F443; Yanık plastik</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Islak</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Soğuk metal</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x270B; Pürüzlü</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Tuzlu</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Ekşi</div>
+    <div class="badge" style="background:#fff;border-color:#ccc;color:#555;">&#x1F444; Tatlı</div>
+  </div>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links button').forEach((b,i) => {
+      b.classList.toggle('active', ['home','activity','quiz','examples'][i] === id);
+    });
+    if(id==='quiz') initQuiz();
+  }
+
+  function selectTheme(el, text) {
+    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const box = document.getElementById('selected-theme');
+    box.style.display = 'block';
+    box.textContent = 'Seçilen tema: ' + text;
+  }
+
+  let timerInterval = null, timerSeconds = 420, timerRunning = false;
+  function setTimer(s) { clearInterval(timerInterval); timerRunning=false; timerSeconds=s; updateTimerDisplay(); document.getElementById('start-btn').textContent='Başlat'; }
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds/60), s = timerSeconds%60;
+    document.getElementById('timer-display').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+  function toggleTimer() {
+    if(timerRunning) { clearInterval(timerInterval); timerRunning=false; document.getElementById('start-btn').textContent='Devam'; }
+    else { timerRunning=true; document.getElementById('start-btn').textContent='Durdur';
+      timerInterval = setInterval(()=>{ if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}else{clearInterval(timerInterval);timerRunning=false;document.getElementById('start-btn').textContent='Başlat';document.getElementById('timer-display').textContent='Bitti!';} },1000); }
+  }
+  updateTimerDisplay();
+
+  function updateChar() {
+    const t = document.getElementById('prompt-text').value;
+    document.getElementById('char-count').textContent = t.length;
+  }
+  function submitPrompt() {
+    const t = document.getElementById('prompt-text').value.trim();
+    if(!t){ alert('Lütfen bir prompt yaz!'); return; }
+    alert('Prompt gönderildi! Şimdi oylama kısmından puanlamayı yapabilirsiniz.');
+  }
+
+  const scoreData = {};
+  ['t1','t2','t3'].forEach(team => {
+    ['funny','creative','clear'].forEach(cat => {
+      const container = document.getElementById('stars-'+team+'-'+cat);
+      scoreData[team+'-'+cat] = 0;
+      for(let i=1;i<=5;i++){
+        const btn = document.createElement('button');
+        btn.className='star'; btn.textContent='★'; btn.dataset.val=i;
+        btn.onclick = () => {
+          scoreData[team+'-'+cat]=i;
+          container.querySelectorAll('.star').forEach((s,idx)=>s.classList.toggle('on',idx<i));
+          let total=0;
+          ['funny','creative','clear'].forEach(c=>total+=scoreData[team+'-'+c]||0);
+          document.getElementById('total-'+team).textContent=total;
+        };
+        container.appendChild(btn);
+      }
+    });
+  });
+
+  const improvPrompts = [
+    "Kütüphanede sesini kaybeden bir kitap rafı düşün — seslerin kokusu ne olurdu?",
+    "Sabah kahvesinin buharu bir portal açıyor; giren kişi hangi sesi duyar?",
+    "Yıldızları sayan bir merdiven her basamakta farklı bir tat bırakıyor.",
+    "Müzik notaları renk alırsa mavi bir sol ile kırmızı bir mi arasındaki kavgayı anlat.",
+    "Yağmurun dokunuşuyla konuşan bir bank, gece boyu ne anlatırdı?",
+  ];
+  let improvTimerInt = null;
+  function generateImprov() {
+    clearInterval(improvTimerInt);
+    document.getElementById('improv-countdown').style.display='none';
+    document.getElementById('improv-prompt').textContent = improvPrompts[Math.floor(Math.random()*improvPrompts.length)];
+  }
+  function startImprovTimer() {
+    clearInterval(improvTimerInt);
+    let sec=30;
+    const cd = document.getElementById('improv-countdown');
+    cd.style.display='block'; cd.textContent=30;
+    improvTimerInt = setInterval(()=>{ sec--; cd.textContent=sec; if(sec<=0){clearInterval(improvTimerInt);cd.textContent='Süre Doldu!';} },1000);
+  }
+
+  const quizQuestions = [
+    { q:"İyi bir prompt'ta aşağıdakilerden hangisi EN ÖNEMLİ unsurdur?", opts:["Mümkün olduğunca kısa tutmak","Bağlamı ve amacı net belirtmek","Sadece soru işareti kullanmak","Teknik terimler eklemek"], ans:1, exp:"İyi bir prompt, amacı ve bağlamı net ortaya koyar. Yapay zeka doğru yönlendirme olmadan cevabı tahmin etmek zorunda kalır." },
+    { q:"Aşağıdaki prompt'lardan hangisi daha etkilidir?", opts:["Hikaye yaz","Küçük bir çocuk için, uykuya dayanmaya çalışan cesur bir kirpi hakkında kısa ve komik bir hikaye yaz","Bir şeyler anlat","İyi bir metin üret"], ans:1, exp:"Hedef kitle, ton, uzunluk ve konu belirlenmiş prompt çok daha tutarlı sonuçlar verir." },
+    { q:"Prompt'ta 'duyu' kelimelerine yer vermek ne işe yarar?", opts:["Yapay zekanın daha hızlı yanıt vermesini sağlar","Metni daha uzun yapar","Anlatıyı canlı ve sürükleyici hale getirir","Sadece edebî metinlerde gereklidir"], ans:2, exp:"Görsel, işitsel, dokunsal unsurlar okuyucuyu metne çeker ve yapay zekanın zengin, detaylı içerik üretmesine yol açar." },
+    { q:"'Sürpriz öge' bir prompt'a katıldığında ne olur?", opts:["Yapay zeka kafa karışıklığı yaşar","Yaratıcılık ve özgünlük artar","Prompt geçersiz hale gelir","Cevap daha kısa olur"], ans:1, exp:"Beklenmedik unsurlar yapay zekanın kalıpların dışına çıkmasını teşvik eder ve daha özgün çıktılar üretir." },
+    { q:"Aşağıdakilerden hangisi bir prompt yazım stratejisi DEĞİLDİR?", opts:["Rol vermek ('Sen bir müzisyensin...')","Örneklerle açıklamak","Yazı tipi boyutunu belirtmek","Format istemek ('madde madde yaz')"], ans:2, exp:"Yazı tipi gibi görsel biçimlendirme talimatları metin tabanlı yapay zeka çıktısını etkilemez. Diğerleri etkili stratejilerdir." },
+    { q:"Bir prompt en fazla 2 cümle olursa bu durumda ne önerilir?", opts:["Daha fazla prompt göndermek","Her cümlenin yoğun ve spesifik olmasını sağlamak","Sadece soru sormak","Prompt'u tamamen kısaltmak"], ans:1, exp:"Sınırlı uzunluklarda her cümle maksimum bilgi taşımalıdır: hedef kitle, ton, bağlam ve format." },
+  ];
+  let qIndex=0, qScore=0, qAnswered=false;
+  function initQuiz(){ qIndex=0; qScore=0; renderQuestion(); }
+  function renderQuestion(){
+    const c = document.getElementById('quiz-container');
+    if(qIndex>=quizQuestions.length){ c.innerHTML=`<div class="quiz-result"><div class="big">${qScore}/${quizQuestions.length}</div><p>${qScore>=5?'Harika! Prompt ustasısın!':qScore>=3?'İyi gidiyorsun, biraz daha pratik yap!':'Tekrar dene, her seferinde daha iyi olacaksın!'}</p><button class="quiz-restart" onclick="initQuiz()">Tekrar Oyna</button></div>`; return; }
+    qAnswered=false;
+    const q = quizQuestions[qIndex];
+    c.innerHTML=`<div class="quiz-progress">Soru ${qIndex+1} / ${quizQuestions.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i})">${o}</button>`).join('')}</div><div id="quiz-fb"></div>`;
+  }
+  function answerQuiz(i){
+    if(qAnswered)return; qAnswered=true;
+    const q=quizQuestions[qIndex];
+    const opts=document.querySelectorAll('.quiz-opt');
+    opts.forEach((o,idx)=>{ o.classList.add('disabled'); if(idx===q.ans)o.classList.add('correct'); else if(idx===i&&i!==q.ans)o.classList.add('wrong'); });
+    const fb=document.getElementById('quiz-fb');
+    if(i===q.ans){ qScore++; fb.innerHTML=`<div class="quiz-feedback ok">Doğru! ${q.exp}</div>`; }
+    else { fb.innerHTML=`<div class="quiz-feedback fail">Yanlış. ${q.exp}</div>`; }
+    fb.innerHTML+=`<button class="quiz-next" onclick="nextQ()">${qIndex+1<quizQuestions.length?'Sonraki Soru':'Sonucu Gör'}</button>`;
+  }
+  function nextQ(){ qIndex++; renderQuestion(); }
+  initQuiz();
+</script>
